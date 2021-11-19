@@ -1,0 +1,22 @@
+.Card {
+    /* border: 1px solid blue; */
+    height: 150px;
+    padding: 5px;
+    text-align: center;
+    
+    background-size: cover;
+    background-position: center;
+     transition: all 0.2s ease-in-out;
+    
+}
+
+.Card:hover {
+  
+    transform: scale(1.2);
+}
+
+.Card h2 {
+    background-color: rgba(0, 0, 0, 0.226) ;
+    color: white;
+    font-size: 20px;
+}
