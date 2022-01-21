@@ -1,19 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import moviesData from "../../api/movies";
+// import moviesData from "../../api/movies";
 import "./Movie.css";
 import { Modal } from "react-bootstrap";
+
+const backendURL = process.env.REACT_APP_BACKEND_URL
 
 export default function Movie() {
   const { pageId } = useParams();
   const [movieObject, setMovieObject] = useState(null);
   const [isOpen, setIsOpen]= useState(false)
 
+  
+
   useEffect(() => {
-    const targetMovie = moviesData.find(
-      (currentValue) => pageId === currentValue.id
-    );
-    setMovieObject(targetMovie);
+    const getMovieById = async()=>{
+      const res = await fetch(backendURL + '/movie/' + pageId)
+      const data = await res.json()
+      setMovieObject(data)
+    }
+    getMovieById()
+    
   }, [pageId]);
 
   return movieObject ? (

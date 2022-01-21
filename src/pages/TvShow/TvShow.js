@@ -1,17 +1,27 @@
 import React, { useEffect, useState} from 'react';
 import './TvShow.css';
 import { useParams, Link } from 'react-router-dom';
-import tvShows from '../../api/tv-shows'
+// import tvShows from '../../api/tv-shows'
+
+const backendURL = process.env.REACT_APP_BACKEND_URL
 
 export default function TvShow() {
     const { tvShowId } = useParams();
     const [tvShowObject, setTvShowObject] = useState();
     const [tvShowSeason, setTvShowSeason] = useState({});
 
+    
+
     useEffect(()=> {
-        const getTvShow = tvShows.find((el) => el.id === tvShowId);
-        setTvShowObject(getTvShow);
-        setTvShowSeason(getTvShow.seasons[1])
+        const getTvShowById = async()=>{
+            const res = await fetch(backendURL + '/tv-show/' + tvShowId)
+            const data = await res.json()
+            setTvShowObject(data)
+            setTvShowSeason(data?.seasons[0])
+          }
+
+        getTvShowById()
+
     }, [tvShowId]);
 
 
